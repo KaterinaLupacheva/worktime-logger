@@ -1,10 +1,15 @@
+import { useState } from "react";
 import "./App.css";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
 
 function App() {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("CLICK");
+    console.log(startDate);
+    console.log(endDate);
   };
   return (
     <Container
@@ -17,6 +22,8 @@ function App() {
             id="date"
             label="Start date"
             type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
             InputLabelProps={{
               shrink: true,
             }}
@@ -25,6 +32,8 @@ function App() {
             id="date"
             label="End date"
             type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
             InputLabelProps={{
               shrink: true,
             }}
