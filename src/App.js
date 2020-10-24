@@ -1,10 +1,14 @@
-import './App.css';
+import "./App.css";
+import { Container } from "@material-ui/core";
 
 function App() {
   return (
-    <div className="App">
+    <Container
+      maxWidth="md"
+      style={{ backgroundColor: "#cfe8fc", height: "100vh" }}
+    >
       TEST
-    </div>
+    </Container>
   );
 }
 
