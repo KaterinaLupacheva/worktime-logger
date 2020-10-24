@@ -1,5 +1,5 @@
 import "./App.css";
-import { Container } from "@material-ui/core";
+import { Container, Paper, TextField } from "@material-ui/core";
 
 function App() {
   return (
@@ -7,7 +7,26 @@ function App() {
       maxWidth="md"
       style={{ backgroundColor: "#cfe8fc", height: "100vh" }}
     >
-      TEST
+      <Paper elevation={5}>
+        <form noValidate>
+          <TextField
+            id="date"
+            label="Start date"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            id="date"
+            label="End date"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </form>
+      </Paper>
     </Container>
   );
 }
