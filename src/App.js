@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
 import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
+import eachDayOfInterval from "date-fns/eachDayOfInterval";
+import { DataGrid, RowsProp, ColDef } from "@material-ui/data-grid";
 
 function App() {
   const [startDate, setStartDate] = useState("");
@@ -9,13 +11,47 @@ function App() {
   const [sum, setSum] = useState(0);
   const [rate, setRate] = useState(0);
 
+  const columns: ColDef[] = [
+    { field: "col1", headerName: "Date", width: 150 },
+    { field: "col2", headerName: "Time", width: 150 },
+  ];
+
+  const rows: RowsProp = [
+    { id: 1, col1: "Hello", col2: "World" },
+    { id: 2, col1: "XGrid", col2: "is Awesome" },
+    { id: 3, col1: "Material-UI", col2: "is Amazing" },
+  ];
+
   const onSubmit = (e) => {
     e.preventDefault();
     const days =
       differenceInBusinessDays(new Date(endDate), new Date(startDate)) + 1;
-    console.log(days);
-    console.log(sum / days);
+    const timeToLog = sum / rate;
+    const hoursPerDay = timeToLog / days;
+    const hours = Math.trunc(hoursPerDay);
+    const mins =
+      Math.round(((hoursPerDay - Math.floor(hoursPerDay)) * 60) / 10) * 10;
+    console.log(timeToLog);
+    const totalMins = mins * (days - 1);
+    const minsToHours = Math.floor(totalMins / 60);
+    const restMins = totalMins - minsToHours * 60;
+    const totalHours = hours * (days - 1) + minsToHours;
+    console.log(totalHours, restMins);
+    const total = restMins / 60 + totalHours;
+    console.log(total);
+    const dates = eachDayOfInterval({
+      start: new Date(startDate),
+      end: new Date(endDate),
+    });
+    getBusinessdays(dates);
   };
+
+  const getBusinessdays = (dates) => {
+    return dates.filter((date) => date.getDay() !== 6 && date.getDay() !== 0);
+  };
+
+  const createRows = () => {};
+
   return (
     <Container
       maxWidth="md"
@@ -70,6 +106,7 @@ function App() {
           </Button>
         </form>
       </Paper>
+      <DataGrid rows={rows} columns={columns} />
     </Container>
   );
 }
