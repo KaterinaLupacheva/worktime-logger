@@ -7,13 +7,14 @@ function App() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [sum, setSum] = useState(0);
+  const [rate, setRate] = useState(0);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const days =
       differenceInBusinessDays(new Date(endDate), new Date(startDate)) + 1;
     console.log(days);
-    console.log(sum);
+    console.log(sum / days);
   };
   return (
     <Container
@@ -48,6 +49,17 @@ function App() {
             type="number"
             value={sum}
             onChange={(e) => setSum(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="outlined"
+          />
+          <TextField
+            id="filled-number"
+            label="Rate"
+            type="number"
+            value={rate}
+            onChange={(e) => setRate(e.target.value)}
             InputLabelProps={{
               shrink: true,
             }}
