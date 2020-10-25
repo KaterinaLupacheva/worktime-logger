@@ -1,15 +1,19 @@
 import { useState } from "react";
 import "./App.css";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
+import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
 
 function App() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [sum, setSum] = useState(0);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(startDate);
-    console.log(endDate);
+    const days =
+      differenceInBusinessDays(new Date(endDate), new Date(startDate)) + 1;
+    console.log(days);
+    console.log(sum);
   };
   return (
     <Container
@@ -37,6 +41,17 @@ function App() {
             InputLabelProps={{
               shrink: true,
             }}
+          />
+          <TextField
+            id="filled-number"
+            label="Sum"
+            type="number"
+            value={sum}
+            onChange={(e) => setSum(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="outlined"
           />
           <Button variant="contained" color="primary" type="submit">
             Calculate
