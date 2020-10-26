@@ -19,7 +19,7 @@ function App() {
   const [rate, setRate] = useState(0);
   const [tableRows, setTableRows] = useState([]);
 
-  const columns: ColDef[] = [
+  const columns = [
     { field: "date", headerName: "Date", width: 300 },
     { field: "time", headerName: "Time", width: 150 },
     { field: "moneyTotal", headerName: "Total Earnings", width: 150 },

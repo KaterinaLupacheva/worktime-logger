@@ -4,14 +4,6 @@ export const numberToHoursAndMins = (number) => {
   return { hours, mins };
 };
 
-const hoursAndMinsToTotalTime = (hours, mins, days) => {
-  const totalMins = mins * days;
-  const minsToHours = Math.floor(totalMins / 60);
-  const restMins = totalMins - minsToHours * 60;
-  const totalHours = hours * days + minsToHours;
-  return totalHours + restMins / 60;
-};
-
 const hoursAndMinsToNumber = (hours, mins) => {
   return hours + mins / 60;
 };
@@ -70,14 +62,18 @@ export const createTableData = (dates, times, rate) => {
 
     //total row for week
     if (dates[i].getDay() === 5) {
-      const totalWeekTime = numberToHoursAndMins(
-        calculateTotalMonthTime(times.slice(weekStartIdx, i + 1))
+      const weekTimeNumber = calculateTotalMonthTime(
+        times.slice(weekStartIdx, i + 1)
       );
+      const totalWeekTime = numberToHoursAndMins(weekTimeNumber);
+      //   const money = weekArray * rate;
+      //   console.log(money);
       weekStartIdx = i + 1;
       result.push({
         id: id,
         date: "Week total",
         time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
+        moneyTotal: Math.round(weekTimeNumber * rate),
       });
       id++;
     }
@@ -100,7 +96,7 @@ export const createTableData = (dates, times, rate) => {
     id: id,
     date: "Total",
     time: `${totalTime.hours} h, ${totalTime.mins} min`,
-    moneyTotal: calculateTotalMonthTime(times) * rate,
+    moneyTotal: Math.round(calculateTotalMonthTime(times) * rate),
   });
   return result;
 };
