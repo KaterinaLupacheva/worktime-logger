@@ -16,7 +16,7 @@ function App() {
   const [endDate, setEndDate] = useState("");
   const [sum, setSum] = useState(0);
   const [rate, setRate] = useState(0);
-  const [finalTimeArr, setFinalTimeArr] = [];
+  const [finalTimeArr, setFinalTimeArr] = useState([]);
 
   const columns: ColDef[] = [
     { field: "col1", headerName: "Date", width: 150 },
@@ -38,6 +38,7 @@ function App() {
     const hoursAndMinsPerDay = numberToHoursAndMins(hoursPerDay);
     const timeArray = createDaylyTime(hoursAndMinsPerDay, days);
     const totalTime = calculateTotalMonthTime(timeArray);
+
     setFinalTimeArr(checkTimeSum(timeToLog, totalTime, timeArray));
 
     // const dates = eachDayOfInterval({
@@ -51,17 +52,11 @@ function App() {
     return dates.filter((date) => date.getDay() !== 6 && date.getDay() !== 0);
   };
 
-  // const checkTimeSum = (totalTime) => {
-  //   if (totalTime === timeToLog) {
-  //     return true;
-  //   }
-  //   if(totalTime > timeToLog) {
-  //     //delete 10 min from every 5th element
-  //     //checkTimeSum again
-  //   }
-  // };
-
   const createRows = () => {};
+
+  useEffect(() => {
+    console.log(finalTimeArr);
+  }, [finalTimeArr]);
 
   return (
     <Container

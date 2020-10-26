@@ -31,28 +31,26 @@ export const calculateTotalMonthTime = (arr) => {
 };
 
 export const checkTimeSum = (timeToLog, calculatedTime, arr) => {
+  let time = calculatedTime;
   let newArr = [...arr];
-  if (timeToLog === calculatedTime) {
-    return newArr;
+  while (Number(time).toFixed(2) !== Number(timeToLog).toFixed(2)) {
+    if (timeToLog < time) {
+      let randomIndex = getRandomElement(0, newArr.length - 1);
+      newArr[randomIndex] = {
+        ...newArr[randomIndex],
+        mins: newArr[randomIndex].mins - 10,
+      };
+      time = calculateTotalMonthTime(newArr);
+    } else if (timeToLog > time) {
+      let randomIndex = getRandomElement(0, newArr.length - 1);
+      newArr[randomIndex] = {
+        ...newArr[randomIndex],
+        mins: newArr[randomIndex].mins + 10,
+      };
+      time = calculateTotalMonthTime(newArr);
+    }
   }
-  if (timeToLog < calculatedTime) {
-    //extract 10 mins from random date
-    let randomIndex = getRandomElement(0, newArr.length - 1);
-    newArr[randomIndex] = {
-      ...newArr[randomIndex],
-      mins: newArr[randomIndex].mins - 10,
-    };
-    checkTimeSum(timeToLog, calculateTotalMonthTime(newArr), newArr);
-  }
-  if (timeToLog > calculatedTime) {
-    //add 10 mins to random date
-    let randomIndex = getRandomElement(0, newArr.length - 1);
-    newArr[randomIndex] = {
-      ...newArr[randomIndex],
-      mins: newArr[randomIndex].mins + 10,
-    };
-    checkTimeSum(timeToLog, calculateTotalMonthTime(newArr), newArr);
-  }
+  return newArr;
 };
 
 const getRandomElement = (min, max) =>
