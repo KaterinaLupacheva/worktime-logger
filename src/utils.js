@@ -58,16 +58,46 @@ const getRandomElement = (min, max) =>
 
 export const createTableData = (dates, times, rate) => {
   let result = [];
+  let id = 0;
+  let weekStartIdx = 0;
   for (let i = 0; i < dates.length; i++) {
     result.push({
-      id: i + 1,
+      id: id,
       date: dates[i].toDateString(),
       time: `${times[i].hours} h, ${times[i].mins} min`,
     });
+    id++;
+
+    //total row for week
+    if (dates[i].getDay() === 5) {
+      const totalWeekTime = numberToHoursAndMins(
+        calculateTotalMonthTime(times.slice(weekStartIdx, i + 1))
+      );
+      weekStartIdx = i + 1;
+      result.push({
+        id: id,
+        date: "Week total",
+        time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
+      });
+      id++;
+    }
+
+    //total row for the last week
+    if (i === dates.length - 1 && dates[i].getDay() !== 5) {
+      const totalWeekTime = numberToHoursAndMins(
+        calculateTotalMonthTime(times.slice(weekStartIdx, i + 1))
+      );
+      result.push({
+        id: id,
+        date: "Week total",
+        time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
+      });
+      id++;
+    }
   }
   const totalTime = numberToHoursAndMins(calculateTotalMonthTime(times));
   result.push({
-    id: times.length + 1,
+    id: id,
     date: "Total",
     time: `${totalTime.hours} h, ${totalTime.mins} min`,
     moneyTotal: calculateTotalMonthTime(times) * rate,
