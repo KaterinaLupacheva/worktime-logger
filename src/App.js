@@ -9,6 +9,7 @@ import {
   createDaylyTime,
   calculateTotalMonthTime,
   checkTimeSum,
+  createTableData,
 } from "./utils";
 
 function App() {
@@ -39,13 +40,14 @@ function App() {
     const timeArray = createDaylyTime(hoursAndMinsPerDay, days);
     const totalTime = calculateTotalMonthTime(timeArray);
 
-    setFinalTimeArr(checkTimeSum(timeToLog, totalTime, timeArray));
+    const times = checkTimeSum(timeToLog, totalTime, timeArray);
 
-    // const dates = eachDayOfInterval({
-    //   start: new Date(startDate),
-    //   end: new Date(endDate),
-    // });
-    // getBusinessdays(dates);
+    const dates = eachDayOfInterval({
+      start: new Date(startDate),
+      end: new Date(endDate),
+    });
+    const workingDates = getBusinessdays(dates);
+    console.log(createTableData(workingDates, times));
   };
 
   const getBusinessdays = (dates) => {

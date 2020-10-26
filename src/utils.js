@@ -55,3 +55,14 @@ export const checkTimeSum = (timeToLog, calculatedTime, arr) => {
 
 const getRandomElement = (min, max) =>
   Math.floor(Math.random() * (max - min)) + min;
+
+export const createTableData = (dates, times) => {
+  let result = [];
+  for (let i = 0; i < dates.length; i++) {
+    result.push({
+      date: dates[i],
+      time: times[i],
+    });
+  }
+  return result;
+};
