@@ -4,7 +4,7 @@ export const numberToHoursAndMins = (number) => {
   return { hours, mins };
 };
 
-export const hoursAndMinsToTotalTime = (hours, mins, days) => {
+const hoursAndMinsToTotalTime = (hours, mins, days) => {
   const totalMins = mins * days;
   const minsToHours = Math.floor(totalMins / 60);
   const restMins = totalMins - minsToHours * 60;
@@ -12,7 +12,7 @@ export const hoursAndMinsToTotalTime = (hours, mins, days) => {
   return totalHours + restMins / 60;
 };
 
-export const hoursAndMinsToNumber = (hours, mins) => {
+const hoursAndMinsToNumber = (hours, mins) => {
   return hours + mins / 60;
 };
 
@@ -29,3 +29,31 @@ export const calculateTotalMonthTime = (arr) => {
   arr.forEach((el) => (totalTime += hoursAndMinsToNumber(el.hours, el.mins)));
   return totalTime;
 };
+
+export const checkTimeSum = (timeToLog, calculatedTime, arr) => {
+  let newArr = [...arr];
+  if (timeToLog === calculatedTime) {
+    return newArr;
+  }
+  if (timeToLog < calculatedTime) {
+    //extract 10 mins from random date
+    let randomIndex = getRandomElement(0, newArr.length - 1);
+    newArr[randomIndex] = {
+      ...newArr[randomIndex],
+      mins: newArr[randomIndex].mins - 10,
+    };
+    checkTimeSum(timeToLog, calculateTotalMonthTime(newArr), newArr);
+  }
+  if (timeToLog > calculatedTime) {
+    //add 10 mins to random date
+    let randomIndex = getRandomElement(0, newArr.length - 1);
+    newArr[randomIndex] = {
+      ...newArr[randomIndex],
+      mins: newArr[randomIndex].mins + 10,
+    };
+    checkTimeSum(timeToLog, calculateTotalMonthTime(newArr), newArr);
+  }
+};
+
+const getRandomElement = (min, max) =>
+  Math.floor(Math.random() * (max - min)) + min;

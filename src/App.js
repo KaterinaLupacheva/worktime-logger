@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
 import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import { DataGrid, RowsProp, ColDef } from "@material-ui/data-grid";
-import {numberToHoursAndMins, createDaylyTime, calculateTotalMonthTime} from './utils';
+import {
+  numberToHoursAndMins,
+  createDaylyTime,
+  calculateTotalMonthTime,
+  checkTimeSum,
+} from "./utils";
 
 function App() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [sum, setSum] = useState(0);
   const [rate, setRate] = useState(0);
+  const [finalTimeArr, setFinalTimeArr] = [];
 
   const columns: ColDef[] = [
     { field: "col1", headerName: "Date", width: 150 },
@@ -32,16 +38,8 @@ function App() {
     const hoursAndMinsPerDay = numberToHoursAndMins(hoursPerDay);
     const timeArray = createDaylyTime(hoursAndMinsPerDay, days);
     const totalTime = calculateTotalMonthTime(timeArray);
-    console.log(totalTime);
-    
-    
-    // const totalMins = mins * days;
-    // const minsToHours = Math.floor(totalMins / 60);
-    // const restMins = totalMins - minsToHours * 60;
-    // const totalHours = hours * days + minsToHours;
-    // console.log(totalHours, restMins);
-    // const total = restMins / 60 + totalHours;
-    // console.log(total);
+    setFinalTimeArr(checkTimeSum(timeToLog, totalTime, timeArray));
+
     // const dates = eachDayOfInterval({
     //   start: new Date(startDate),
     //   end: new Date(endDate),
