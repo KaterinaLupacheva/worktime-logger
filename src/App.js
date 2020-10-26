@@ -4,6 +4,7 @@ import { Container, Paper, TextField, Button } from "@material-ui/core";
 import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import { DataGrid, RowsProp, ColDef } from "@material-ui/data-grid";
+import {numberToHoursAndMins, createDaylyTime, calculateTotalMonthTime} from './utils';
 
 function App() {
   const [startDate, setStartDate] = useState("");
@@ -28,27 +29,39 @@ function App() {
       differenceInBusinessDays(new Date(endDate), new Date(startDate)) + 1;
     const timeToLog = sum / rate;
     const hoursPerDay = timeToLog / days;
-    const hours = Math.trunc(hoursPerDay);
-    const mins =
-      Math.round(((hoursPerDay - Math.floor(hoursPerDay)) * 60) / 10) * 10;
-    console.log(timeToLog);
-    const totalMins = mins * (days - 1);
-    const minsToHours = Math.floor(totalMins / 60);
-    const restMins = totalMins - minsToHours * 60;
-    const totalHours = hours * (days - 1) + minsToHours;
-    console.log(totalHours, restMins);
-    const total = restMins / 60 + totalHours;
-    console.log(total);
-    const dates = eachDayOfInterval({
-      start: new Date(startDate),
-      end: new Date(endDate),
-    });
-    getBusinessdays(dates);
+    const hoursAndMinsPerDay = numberToHoursAndMins(hoursPerDay);
+    const timeArray = createDaylyTime(hoursAndMinsPerDay, days);
+    const totalTime = calculateTotalMonthTime(timeArray);
+    console.log(totalTime);
+    
+    
+    // const totalMins = mins * days;
+    // const minsToHours = Math.floor(totalMins / 60);
+    // const restMins = totalMins - minsToHours * 60;
+    // const totalHours = hours * days + minsToHours;
+    // console.log(totalHours, restMins);
+    // const total = restMins / 60 + totalHours;
+    // console.log(total);
+    // const dates = eachDayOfInterval({
+    //   start: new Date(startDate),
+    //   end: new Date(endDate),
+    // });
+    // getBusinessdays(dates);
   };
 
   const getBusinessdays = (dates) => {
     return dates.filter((date) => date.getDay() !== 6 && date.getDay() !== 0);
   };
+
+  // const checkTimeSum = (totalTime) => {
+  //   if (totalTime === timeToLog) {
+  //     return true;
+  //   }
+  //   if(totalTime > timeToLog) {
+  //     //delete 10 min from every 5th element
+  //     //checkTimeSum again
+  //   }
+  // };
 
   const createRows = () => {};
 
