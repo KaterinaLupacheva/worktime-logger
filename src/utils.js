@@ -65,5 +65,11 @@ export const createTableData = (dates, times) => {
       time: `${times[i].hours} h, ${times[i].mins} min`,
     });
   }
+  const totalTime = numberToHoursAndMins(calculateTotalMonthTime(times));
+  result.push({
+    id: times.length + 1,
+    date: "Total",
+    time: `${totalTime.hours} h, ${totalTime.mins} min`,
+  });
   return result;
 };
