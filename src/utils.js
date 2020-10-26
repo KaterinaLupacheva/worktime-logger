@@ -56,7 +56,7 @@ export const checkTimeSum = (timeToLog, calculatedTime, arr) => {
 const getRandomElement = (min, max) =>
   Math.floor(Math.random() * (max - min)) + min;
 
-export const createTableData = (dates, times) => {
+export const createTableData = (dates, times, rate) => {
   let result = [];
   for (let i = 0; i < dates.length; i++) {
     result.push({
@@ -70,6 +70,7 @@ export const createTableData = (dates, times) => {
     id: times.length + 1,
     date: "Total",
     time: `${totalTime.hours} h, ${totalTime.mins} min`,
+    moneyTotal: calculateTotalMonthTime(times) * rate,
   });
   return result;
 };

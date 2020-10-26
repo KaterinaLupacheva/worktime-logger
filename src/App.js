@@ -22,7 +22,7 @@ function App() {
   const columns: ColDef[] = [
     { field: "date", headerName: "Date", width: 300 },
     { field: "time", headerName: "Time", width: 150 },
-    { field: "totalTime", headerName: "Total Time", width: 150 },
+    { field: "moneyTotal", headerName: "Total Earnings", width: 150 },
   ];
 
   const onSubmit = (e) => {
@@ -43,7 +43,7 @@ function App() {
     });
     const workingDates = getBusinessdays(dates);
 
-    setTableRows(createTableData(workingDates, times));
+    setTableRows(createTableData(workingDates, times, rate));
   };
 
   const getBusinessdays = (dates) => {
