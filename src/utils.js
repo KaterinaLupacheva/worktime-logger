@@ -60,8 +60,9 @@ export const createTableData = (dates, times) => {
   let result = [];
   for (let i = 0; i < dates.length; i++) {
     result.push({
-      date: dates[i],
-      time: times[i],
+      id: i + 1,
+      date: dates[i].toDateString(),
+      time: `${times[i].hours} h, ${times[i].mins} min`,
     });
   }
   return result;

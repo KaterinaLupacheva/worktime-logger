@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
 import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
-import { DataGrid, RowsProp, ColDef } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import {
   numberToHoursAndMins,
   createDaylyTime,
@@ -17,17 +17,11 @@ function App() {
   const [endDate, setEndDate] = useState("");
   const [sum, setSum] = useState(0);
   const [rate, setRate] = useState(0);
-  const [finalTimeArr, setFinalTimeArr] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
 
   const columns: ColDef[] = [
-    { field: "col1", headerName: "Date", width: 150 },
-    { field: "col2", headerName: "Time", width: 150 },
-  ];
-
-  const rows: RowsProp = [
-    { id: 1, col1: "Hello", col2: "World" },
-    { id: 2, col1: "XGrid", col2: "is Awesome" },
-    { id: 3, col1: "Material-UI", col2: "is Amazing" },
+    { field: "date", headerName: "Date", width: 300 },
+    { field: "time", headerName: "Time", width: 150 },
   ];
 
   const onSubmit = (e) => {
@@ -47,18 +41,13 @@ function App() {
       end: new Date(endDate),
     });
     const workingDates = getBusinessdays(dates);
-    console.log(createTableData(workingDates, times));
+
+    setTableRows(createTableData(workingDates, times));
   };
 
   const getBusinessdays = (dates) => {
     return dates.filter((date) => date.getDay() !== 6 && date.getDay() !== 0);
   };
-
-  const createRows = () => {};
-
-  useEffect(() => {
-    console.log(finalTimeArr);
-  }, [finalTimeArr]);
 
   return (
     <Container
@@ -114,7 +103,7 @@ function App() {
           </Button>
         </form>
       </Paper>
-      <DataGrid rows={rows} columns={columns} />
+      <DataGrid rows={tableRows} columns={columns} />
     </Container>
   );
 }
