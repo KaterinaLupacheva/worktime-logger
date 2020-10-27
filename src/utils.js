@@ -62,32 +62,14 @@ export const createTableData = (dates, times, rate) => {
 
     //total row for week
     if (dates[i].getDay() === 5) {
-      const weekTimeNumber = calculateTotalMonthTime(
-        times.slice(weekStartIdx, i + 1)
-      );
-      const totalWeekTime = numberToHoursAndMins(weekTimeNumber);
+      result.push(createTotalRow(weekStartIdx, times, id, rate, i));
       weekStartIdx = i + 1;
-      result.push({
-        id: id,
-        date: "Week total",
-        time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
-        moneyTotal: Math.round(weekTimeNumber * rate),
-      });
       id++;
     }
 
     //total row for the last week
     if (i === dates.length - 1 && dates[i].getDay() !== 5) {
-      const weekTimeNumber = calculateTotalMonthTime(
-        times.slice(weekStartIdx, i + 1)
-      );
-      const totalWeekTime = numberToHoursAndMins(weekTimeNumber);
-      result.push({
-        id: id,
-        date: "Week total",
-        time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
-        moneyTotal: Math.round(weekTimeNumber * rate),
-      });
+      result.push(createTotalRow(weekStartIdx, times, id, rate, i));
       id++;
     }
   }
@@ -99,4 +81,18 @@ export const createTableData = (dates, times, rate) => {
     moneyTotal: Math.round(calculateTotalMonthTime(times) * rate),
   });
   return result;
+};
+
+const createTotalRow = (weekStartIdx, times, id, rate, i) => {
+  const timesCopy = [...times];
+  const weekTimeNumber = calculateTotalMonthTime(
+    timesCopy.slice(weekStartIdx, i + 1)
+  );
+  const totalWeekTime = numberToHoursAndMins(weekTimeNumber);
+  return {
+    id: id,
+    date: "Week total",
+    time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
+    moneyTotal: Math.round(weekTimeNumber * rate),
+  };
 };
