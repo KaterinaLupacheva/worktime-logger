@@ -12,6 +12,16 @@ import {
   createTableData,
 } from "./utils";
 
+const formStyle = {
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "space-evenly",
+};
+
+const textFieldStyle = {
+  margin: "20px",
+};
+
 function App() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -51,12 +61,9 @@ function App() {
   };
 
   return (
-    <Container
-      maxWidth="md"
-      style={{ backgroundColor: "#cfe8fc", height: "100vh" }}
-    >
-      <Paper elevation={5}>
-        <form noValidate onSubmit={onSubmit}>
+    <Container maxWidth="md" style={{ backgroundColor: "#d3f5e7" }}>
+      <Paper elevation={5} style={{ padding: "5vh", marginBottom: "3rem" }}>
+        <form style={formStyle} noValidate onSubmit={onSubmit}>
           <TextField
             id="date"
             label="Start date"
@@ -66,6 +73,7 @@ function App() {
             InputLabelProps={{
               shrink: true,
             }}
+            style={textFieldStyle}
           />
           <TextField
             id="date"
@@ -76,6 +84,7 @@ function App() {
             InputLabelProps={{
               shrink: true,
             }}
+            style={textFieldStyle}
           />
           <TextField
             id="filled-number"
@@ -87,6 +96,7 @@ function App() {
               shrink: true,
             }}
             variant="outlined"
+            style={textFieldStyle}
           />
           <TextField
             id="filled-number"
@@ -98,13 +108,19 @@ function App() {
               shrink: true,
             }}
             variant="outlined"
+            style={textFieldStyle}
           />
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            style={textFieldStyle}
+          >
             Calculate
           </Button>
         </form>
       </Paper>
-      <DataGrid rows={tableRows} columns={columns} />
+      <DataGrid autoHeight pageSize={40} rows={tableRows} columns={columns} />
     </Container>
   );
 }
