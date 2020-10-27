@@ -4,6 +4,7 @@ import { Container, Paper, TextField, Button } from "@material-ui/core";
 import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import { DataGrid } from "@material-ui/data-grid";
+import { CSVLink, CSVDownload } from "react-csv";
 import {
   numberToHoursAndMins,
   createDaylyTime,
@@ -117,6 +118,11 @@ function App() {
             style={textFieldStyle}
           >
             Calculate
+          </Button>
+          <Button variant="contained" color="secondary" style={textFieldStyle}>
+            <CSVLink style={{ color: "white" }} data={tableRows}>
+              Download CSV
+            </CSVLink>
           </Button>
         </form>
       </Paper>
