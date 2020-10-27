@@ -4,7 +4,7 @@ import { Container, Paper, TextField, Button } from "@material-ui/core";
 import differenceInBusinessDays from "date-fns/differenceInBusinessDays";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import { DataGrid } from "@material-ui/data-grid";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import {
   numberToHoursAndMins,
   createDaylyTime,
@@ -62,8 +62,11 @@ function App() {
   };
 
   return (
-    <Container maxWidth="md" style={{ backgroundColor: "#d3f5e7" }}>
-      <Paper elevation={5} style={{ padding: "5vh", marginBottom: "3rem" }}>
+    <Container
+      maxWidth="md"
+      style={{ backgroundColor: "#d3f5e7", paddingTop: "2rem" }}
+    >
+      <Paper elevation={5} style={{ margin: "0 2rem 2rem 2rem" }}>
         <form style={formStyle} noValidate onSubmit={onSubmit}>
           <TextField
             id="date"
@@ -89,7 +92,7 @@ function App() {
           />
           <TextField
             id="filled-number"
-            label="Sum"
+            label="Salary"
             type="number"
             value={sum}
             onChange={(e) => setSum(e.target.value)}
@@ -101,7 +104,7 @@ function App() {
           />
           <TextField
             id="filled-number"
-            label="Rate"
+            label="Hourly Rate"
             type="number"
             value={rate}
             onChange={(e) => setRate(e.target.value)}
@@ -119,7 +122,12 @@ function App() {
           >
             Calculate
           </Button>
-          <Button variant="contained" color="secondary" style={textFieldStyle} disabled={tableRows.length > 0 ? false : true}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={textFieldStyle}
+            disabled={tableRows.length > 0 ? false : true}
+          >
             <CSVLink style={{ color: "white" }} data={tableRows}>
               Download CSV
             </CSVLink>
