@@ -66,8 +66,6 @@ export const createTableData = (dates, times, rate) => {
         times.slice(weekStartIdx, i + 1)
       );
       const totalWeekTime = numberToHoursAndMins(weekTimeNumber);
-      //   const money = weekArray * rate;
-      //   console.log(money);
       weekStartIdx = i + 1;
       result.push({
         id: id,
@@ -80,13 +78,15 @@ export const createTableData = (dates, times, rate) => {
 
     //total row for the last week
     if (i === dates.length - 1 && dates[i].getDay() !== 5) {
-      const totalWeekTime = numberToHoursAndMins(
-        calculateTotalMonthTime(times.slice(weekStartIdx, i + 1))
+      const weekTimeNumber = calculateTotalMonthTime(
+        times.slice(weekStartIdx, i + 1)
       );
+      const totalWeekTime = numberToHoursAndMins(weekTimeNumber);
       result.push({
         id: id,
         date: "Week total",
         time: `${totalWeekTime.hours} h, ${totalWeekTime.mins} min`,
+        moneyTotal: Math.round(weekTimeNumber * rate),
       });
       id++;
     }

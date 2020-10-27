@@ -119,7 +119,7 @@ function App() {
           >
             Calculate
           </Button>
-          <Button variant="contained" color="secondary" style={textFieldStyle}>
+          <Button variant="contained" color="secondary" style={textFieldStyle} disabled={tableRows.length > 0 ? false : true}>
             <CSVLink style={{ color: "white" }} data={tableRows}>
               Download CSV
             </CSVLink>
