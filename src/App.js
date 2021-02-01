@@ -61,6 +61,8 @@ function App() {
     return dates.filter((date) => date.getDay() !== 6 && date.getDay() !== 0);
   };
 
+  const isValid = startDate && endDate && sum > 0 && rate > 0 ? true : false;
+
   return (
     <Container
       maxWidth="md"
@@ -119,6 +121,7 @@ function App() {
             color="primary"
             type="submit"
             style={textFieldStyle}
+            disabled={!isValid}
           >
             Calculate
           </Button>
