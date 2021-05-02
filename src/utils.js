@@ -4,7 +4,7 @@ export const numberToHoursAndMins = (number) => {
   return { hours, mins };
 };
 
-const hoursAndMinsToNumber = (hours, mins) => {
+export const hoursAndMinsToNumber = (hours, mins) => {
   return hours + mins / 60;
 };
 
