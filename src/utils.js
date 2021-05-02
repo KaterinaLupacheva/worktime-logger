@@ -35,9 +35,14 @@ export const checkTimeSum = (timeToLog, calculatedTime, arr) => {
       time = calculateTotalMonthTime(newArr);
     } else if (timeToLog > time) {
       let randomIndex = getRandomElement(0, newArr.length - 1);
+      const newTimeNumber = hoursAndMinsToNumber(
+        newArr[randomIndex].hours,
+        newArr[randomIndex].mins + 10
+      );
+      const newTime = numberToHoursAndMins(newTimeNumber);
       newArr[randomIndex] = {
         ...newArr[randomIndex],
-        mins: newArr[randomIndex].mins + 10,
+        ...newTime,
       };
       time = calculateTotalMonthTime(newArr);
     }
