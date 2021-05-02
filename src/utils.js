@@ -68,6 +68,11 @@ export const createTableData = (dates, times, rate) => {
     //total row for week
     if (dates[i].getDay() === 5) {
       result.push(createTotalRow(weekStartIdx, times, id, rate, i));
+      result.push({
+        id: "",
+        date: "",
+        time: "",
+      });
       weekStartIdx = i + 1;
       id++;
     }
